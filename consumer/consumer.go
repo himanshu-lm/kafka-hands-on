@@ -3,6 +3,7 @@ package consumer
 import (
 	"context"
 	"fmt"
+	"log"
 
 	"github.com/segmentio/kafka-go"
 )
@@ -25,5 +26,6 @@ func StartKafka() {
 			continue
 		}
 		fmt.Printf("The message received by the consumer is : %v\n", string(msg.Value))
+		log.Println("Message received from kafka to consumer")
 	}
 }

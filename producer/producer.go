@@ -13,6 +13,7 @@ var msgs = []string{"m1", "m2", "m3", "m4", "m5", "m6"}
 
 func CreateMessage() string {
 	randNum := rand.Intn(5)
+	log.Println("A random message to send is created")
 	return msgs[randNum]
 }
 
@@ -27,24 +28,17 @@ func WriteKafka() {
 
 	// infinite loop so as the messages are sent in 1 sec intervals
 	for {
+		// random message created that is to be sent to the topic : mytopic1 in the kafka
+		msg := CreateMessage()
+		// sending the message to the kafka server
 		err := w.WriteMessages(context.Background(),
-			// kafka.Message{
-			// 	Key:   []byte("Key-A"),
-			// 	Value: []byte("Hello World!"),
-			// },
-			// kafka.Message{
-			// 	Key:   []byte("Key-B"),
-			// 	Value: []byte("One!"),
-			// },
-			// kafka.Message{
-			// 	Key:   []byte("Key-C"),
-			// 	Value: []byte("Two!"),
-			// },
 			kafka.Message{
 				Key:   []byte("Key-D"),
-				Value: []byte(CreateMessage()),
+				Value: []byte(msg),
 			},
 		)
+		log.Println("Message sent to the kafka")
+
 		if err != nil {
 			log.Fatal("failed to write messages:", err)
 
